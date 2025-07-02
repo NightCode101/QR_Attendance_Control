@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
             String mode = radioTimeIn.isChecked() ? "in" : "out";
             String status = db.markAttendance(qrContent, mode); // Save only name
 
-            String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-            String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+            String currentTime = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date());
+            String currentDate = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault()).format(new Date());
 
             qrDataText.setText("QR Data: " + qrContent);
             statusText.setText("Status: " + (mode.equals("out") ? "Time-Out" : "Time-In"));

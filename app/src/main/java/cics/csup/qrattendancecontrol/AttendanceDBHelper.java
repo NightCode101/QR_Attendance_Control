@@ -34,19 +34,19 @@ public class AttendanceDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Handle schema upgrades if needed in the future
+        // Future upgrades
     }
 
-    // Marks attendance for "in" or "out" modes
+    // Mark attendance
     public String markAttendance(String studentName, String mode) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        String now = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        String currentDate = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault()).format(new Date());
+        String now = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date());
 
         Cursor cursor = db.rawQuery(
                 "SELECT * FROM " + TABLE_NAME + " WHERE student_id = ? AND date = ?",
-                new String[]{studentName, today}
+                new String[]{studentName, currentDate}
         );
 
         if (cursor.moveToFirst()) {
@@ -69,22 +69,27 @@ public class AttendanceDBHelper extends SQLiteOpenHelper {
                 }
             }
         } else {
+            ContentValues values = new ContentValues();
+            values.put("student_id", studentName);
+            values.put("date", currentDate);
+
             if ("in".equals(mode)) {
-                ContentValues values = new ContentValues();
-                values.put("student_id", studentName);
-                values.put("date", today);
                 values.put("time_in", now);
                 db.insert(TABLE_NAME, null, values);
                 cursor.close();
                 return "Time-In recorded for " + studentName;
             } else {
+                // No Time-In exists, but allow Time-Out
+                values.put("time_in", ""); // blank
+                values.put("time_out", now);
+                db.insert(TABLE_NAME, null, values);
                 cursor.close();
-                return "Time-In not found. Cannot Time-Out.";
+                return "⚠ Time-In not found. Time-Out recorded.";
             }
         }
     }
 
-    // Returns list of attendance records
+    // Return all records
     public List<AttendanceRecord> getAttendanceRecords() {
         List<AttendanceRecord> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -97,6 +102,11 @@ public class AttendanceDBHelper extends SQLiteOpenHelper {
                 String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
                 String timeIn = cursor.getString(cursor.getColumnIndexOrThrow("time_in"));
                 String timeOut = cursor.getString(cursor.getColumnIndexOrThrow("time_out"));
+
+                // Normalize null/empty values
+                if (timeIn == null || timeIn.isEmpty()) timeIn = "-";
+                if (timeOut == null || timeOut.isEmpty()) timeOut = "-";
+
                 list.add(new AttendanceRecord(id, name, date, timeIn, timeOut));
             } while (cursor.moveToNext());
         }
@@ -105,13 +115,13 @@ public class AttendanceDBHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    // Delete a specific record by ID
+    // Delete a record
     public void deleteAttendanceById(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, "id = ?", new String[]{String.valueOf(id)});
     }
 
-    // Clear all attendance records
+    // Clear all records
     public void clearAllAttendance() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
