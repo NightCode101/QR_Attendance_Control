@@ -32,7 +32,7 @@
 
         <activity
             android:name=".QRScanActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="unspecified"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity

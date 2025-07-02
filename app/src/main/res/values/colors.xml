@@ -27,7 +27,9 @@
 
     <!-- RadioButton colors -->
     <color name="radio_unchecked">#cccccc</color>
-    <color name="radio_checked">#fd7f09</color>
+    <!--<color name="radio_checked">#fd7f09</color>-->
+    <color name="radio_checked">#e59e02</color>
+
 
     <!-- Misc colors -->
     <color name="green_primary">#4CAF50</color>
