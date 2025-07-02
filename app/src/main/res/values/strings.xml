@@ -38,4 +38,9 @@
     <string name="export_success">Exported to: %1$s</string>
     <string name="export_failed">Export failed: %1$s</string>
     <string name="write_permission_denied">Write permission denied.</string>
+    <string name="bsit_label">BSIT:</string>
+    <string name="hint_enter_section">Enter your section</string>
+    <string name="enter_section">Enter your section</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="clear_history">Clear History</string>
 </resources>

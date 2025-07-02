@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Enable full screen manual inset control
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         db = new AttendanceDBHelper(this);
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
-        // Load last section
         String lastSection = sharedPreferences.getString(KEY_SECTION, "");
         sectionEditText.setText(lastSection);
 
@@ -101,17 +99,14 @@ public class MainActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         if (result != null && result.getContents() != null) {
-            String qrContent = result.getContents().trim();
-            String section = sectionEditText.getText().toString().trim();
-            String fullData = section + " - " + qrContent;
-
+            String qrContent = result.getContents().trim(); // Only name, no section
             String mode = radioTimeIn.isChecked() ? "in" : "out";
-            String status = db.markAttendance(fullData, mode);
+            String status = db.markAttendance(qrContent, mode); // Save only name
 
             String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
             String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
-            qrDataText.setText("QR Data: " + fullData);
+            qrDataText.setText("QR Data: " + qrContent);
             statusText.setText("Status: " + (mode.equals("out") ? "Time-Out" : "Time-In"));
             timeText.setText("Time: " + currentTime);
             dateText.setText("Date: " + currentDate);

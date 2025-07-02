@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@color/background_light"
     android:fitsSystemWindows="true">
 
-    <!-- Scrollable content area -->
+    <!-- App Title at the very top, centered -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_title"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Scrollable content -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollContent"
         android:layout_width="0dp"
@@ -15,9 +30,8 @@
         android:fillViewport="true"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        android:clipToPadding="false"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/scanButton"
+        app:layout_constraintTop_toBottomOf="@id/appTitle"
+        app:layout_constraintBottom_toTopOf="@+id/modeRadioGroup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -28,41 +42,31 @@
             android:paddingTop="24dp"
             android:paddingBottom="24dp">
 
-            <!-- Header -->
+            <!-- Info Card (no title) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#FFFFFF"
+                android:background="@color/card_background"
                 android:padding="16dp"
                 android:elevation="2dp"
                 android:layout_marginBottom="24dp">
-
-                <TextView
-                    android:id="@+id/appTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_title"
-                    android:textColor="#212121"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/qrDataText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/qr_data"
-                    android:textColor="#757575"
-                    android:textSize="16sp"
-                    android:layout_marginTop="8dp" />
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/statusText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/status_label"
-                    android:textColor="#757575"
-                    android:textSize="16sp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp"
                     android:layout_marginTop="4dp" />
 
                 <TextView
@@ -70,8 +74,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/time_label"
-                    android:textColor="#757575"
-                    android:textSize="16sp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp"
                     android:layout_marginTop="4dp" />
 
                 <TextView
@@ -79,40 +83,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/date_label"
-                    android:textColor="#757575"
-                    android:textSize="16sp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
 
-            <!-- Mode selection -->
-            <RadioGroup
-                android:id="@+id/modeRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="#FFFFFF"
-                android:padding="16dp"
-                android:elevation="2dp"
-                android:layout_marginBottom="24dp">
-
-                <RadioButton
-                    android:id="@+id/radioTimeIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/time_in"
-                    android:textSize="16sp"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/radioTimeOut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/time_out"
-                    android:textSize="16sp"
-                    android:layout_marginStart="32dp" />
-            </RadioGroup>
-
-            <!-- Section input -->
+            <!-- Section Input -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,20 +100,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BSIT:"
-                    android:textSize="16sp"
+                    android:text="@string/bsit_label"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_black"
                     android:layout_marginEnd="8dp" />
 
                 <EditText
                     android:id="@+id/sectionEditText"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:hint="Enter your section"
+                    android:autofillHints="username"
+                    android:hint="@string/enter_section"
                     android:padding="8dp"
-                    android:background="@android:drawable/edit_text"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/green_primary"
                     android:inputType="text" />
             </LinearLayout>
 
@@ -146,27 +124,57 @@
                 android:id="@+id/historyButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/view_history"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="#1976D2"
-                android:textColor="#FFFFFF" />
+                android:backgroundTint="@color/button_history"
+                android:text="@string/view_history"
+                android:textColor="@color/white" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Scan QR Button (Fixed at bottom) -->
+    <!-- Time In/Out RadioGroup stacked vertically -->
+    <RadioGroup
+        android:id="@+id/modeRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioTimeIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_in"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:checked="true"
+            android:paddingBottom="4dp" />
+
+        <RadioButton
+            android:id="@+id/radioTimeOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_out"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:paddingTop="4dp" />
+    </RadioGroup>
+
+    <!-- Scan Button -->
     <Button
         android:id="@+id/scanButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:text="@string/scan_qr"
-        android:textSize="18sp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:layout_marginStart="24dp"
+        android:textSize="16sp"
+        android:backgroundTint="@color/button_scan"
+        android:textColor="@color/white"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/modeRadioGroup"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

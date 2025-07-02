@@ -102,6 +102,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
 
         for (AttendanceRecord record : currentRecords) {
+            // Show only the name (not section)
             TextView row = new TextView(this);
             row.setText(getString(R.string.record_format,
                     record.name,
@@ -133,7 +134,6 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void createCSVFile() {
-        // Get saved section from SharedPreferences
         String section = getSharedPreferences("AttendancePrefs", MODE_PRIVATE)
                 .getString("last_section", "Section");
 
