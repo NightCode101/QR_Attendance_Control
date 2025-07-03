@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_light"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
     <!-- App Title -->
     <TextView
@@ -17,10 +19,11 @@
         android:textColor="@color/primary_accent"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+        <!-- android:layout_marginTop="16dp" -->
+
 
     <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView
@@ -100,21 +103,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="@string/bsit_label"
+                    android:textColor="@color/secondary_accent"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginEnd="8dp" />
+                    android:textStyle="bold|normal" />
 
                 <EditText
                     android:id="@+id/sectionEditText"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:layout_weight="1"
                     android:autofillHints="username"
                     android:hint="@string/enter_section"
+                    android:textColorHint="@color/hint"
                     android:padding="8dp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:backgroundTint="@color/primary_accent"
                     android:inputType="text" />
             </LinearLayout>
